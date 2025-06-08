@@ -1,11 +1,302 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Your Portfolio</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Header/Nav Section -->
+    <nav class="nav">
+      <div class="nav-container">
+        <a href="#" class="logo">My Portfolio </a>
+        <ul class="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#education">Education</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="home">
+      <div class="scanlines"></div>
+      <div class="home-content">
+        <h1 class="name" data-text="Sleiman El Hajj">Sleiman El Hajj</h1>
+        <p class="subtitle">
+          Computer Engineering Student | Full Stack Developer
+        </p>
+
+        <div class="home-buttons">
+          <a href="#projects" class="btn-primary">[VIEW GAMES]</a>
+          <a href="#contact" class="btn-secondary">[CONTACT ME]</a>
+        </div>
+
+        <div class="social-links">
+          <a
+            href="mailto:your-email@example.com"
+            class="social-icon"
+            title="Email"
+          >
+            <span class="icon">📧</span>
+          </a>
+          <a
+            href="https://github.com/yourusername"
+            class="social-icon"
+            title="GitHub"
+          >
+            <span class="icon">🐙</span>
+          </a>
+          <a
+            href="https://linkedin.com/in/yourusername"
+            class="social-icon"
+            title="LinkedIn"
+          >
+            <span class="icon">💼</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+      <div class="container">
+        <h2 class="section-title" data-text="[PLAYER INFO]">[PLAYER INFO]</h2>
+        <button id="getToKnowMeBtn" class="get-to-know-btn">
+          [GET TO KNOW ME]
+        </button>
+        <div class="about-content">
+          <div class="about-terminal">
+            <div class="terminal-header">
+              <span class="terminal-title">SYSTEM_INFO.EXE</span>
+              <div class="terminal-controls">
+                <span class="control minimize">-</span>
+                <span class="control maximize">□</span>
+                <span class="control close">×</span>
+              </div>
+            </div>
+            <div class="terminal-body" id="terminalBody">
+              <!-- Terminal output will be injected here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="education" class="education-section">
+      <div class="container">
+        <h2 class="section-title">Education</h2>
+        <div class="timeline">
+          <div class="timeline-item left">
+            <div class="timeline-content">
+              <div class="timeline-date">
+                2022 - 2026 <span class="expected">(Expected)</span>
+              </div>
+              <div class="timeline-title">
+                Bachelor of Engineering in Computer Engineering
+              </div>
+              <div class="timeline-school">
+                Lebanese American University (LAU) - Byblos, Lebanon
+              </div>
+              <div class="timeline-details">
+                <strong>Relevant Coursework:</strong> Intelligent Engineering
+                Algorithms, Data Structures &amp; Algorithms, Database Systems,
+                Computer Programming
+              </div>
+            </div>
+          </div>
+          <div class="timeline-point"></div>
+          <div class="timeline-item right">
+            <div class="timeline-content">
+              <div class="timeline-date">2019 - 2022</div>
+              <div class="timeline-title">
+                Lebanese Baccalaureate II: General Sciences
+              </div>
+              <div class="timeline-school">
+                Lebanon Evangelical School for Boys and Girls - Baabda, Lebanon
+              </div>
+              <div class="timeline-details">
+                <strong>Achievement:</strong> Graduated with Distinction<br />
+                <strong>Activities:</strong> Member of Engineering Club
+                (2020-2022)
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience" class="experience-section">
+      <div class="container">
+        <h2 class="section-title">Experience</h2>
+        <div class="experience-list">
+          <div class="experience-card">
+            <div class="exp-header">
+              <span class="exp-title">Full Stack Developer </span>
+              <span class="exp-company"
+                >Inframappa | Part-time | Apr 2025 - Current</span
+              >
+            </div>
+            <div class="exp-description">
+              <p>
+                Developed features for
+                <a href="https://inframappa.com/" target="_blank" rel="noopener"
+                  >Inframappa</a
+                >, a leading US infrastructure mapping solution for
+                universities, hospitals, municipalities, and more. Inframappa
+                provides organizations with up-to-date orthorectified imagery,
+                digitized engineering drawings, field-verified assets, and a
+                centralized online database accessible via web, mobile, and
+                AR/VR platforms. The system supports IoT sensor integration,
+                real-time and playback data visualization, and advanced 2D/3D
+                mapping of above and underground assets, including analytics and
+                reporting.
+              </p>
+            </div>
+            <div class="exp-tags">
+              <span>Angular</span>
+              <span>TypeScript</span>
+              <span>OpenLayers</span>
+              <span>Angular Material</span>
+              <span>GIS</span>
+            </div>
+          </div>
+
+          <div class="experience-card">
+            <div class="exp-header">
+              <span class="exp-title">Backend Developer</span>
+              <span class="exp-company">Freelance | Feb 2025 - Mar 2025</span>
+            </div>
+            <div class="exp-description">
+              <p>
+                Developed the backend for a basketball court booking system as a
+                freelance project, using Node.js with Express.js for the API,
+                Swagger for documentation, and PostgreSQL as the database.<br />
+                The system allowed users to book sessions, view available slots,
+                and manage their reservations, while admins could add, update,
+                and remove sessions.
+              </p>
+            </div>
+            <div class="exp-tags">
+              <span>Node.js</span>
+              <span>Express.js</span>
+              <span>PostgreSQL</span>
+              <span>Swagger</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="projects-section">
+      <div class="container">
+        <h2 class="section-title">Projects</h2>
+        <div class="level-select">
+          <button class="level-btn" data-level="1">Level 1</button>
+          <button class="level-btn" data-level="2">Level 2</button>
+          <button class="level-btn" data-level="3">Level 3</button>
+          <button class="level-btn" data-level="4">Final Level</button>
+        </div>
+        <div class="projects-list">
+          <!-- Level 1: BBB - Hotel Booking -->
+          <div class="project-card" data-level="1">
+            <div class="level-label">Level 1</div>
+            <div class="project-icon">🏨</div>
+            <div class="project-title">BBB - Hotel Booking</div>
+            <div class="project-desc">
+              A full-stack team project that enables users to book and list
+              hotel rooms. The application uses MongoDB for data storage and
+              Node.js/Express.js for backend operations.
+            </div>
+            <div class="project-tags">
+              <span>React Native</span>
+              <span>JavaScript</span>
+              <span>Node.js</span>
+              <span>MongoDB</span>
+              <span>Express.js</span>
+            </div>
+            <a class="view-code" href="#">View Code</a>
+          </div>
+
+          <!-- Level 2: Propertease -->
+          <div class="project-card" data-level="2" style="display: none">
+            <div class="level-label">Level 2</div>
+            <div class="project-icon">🏠</div>
+            <div class="project-title">Propertease</div>
+            <div class="project-desc">
+              A property listing application with an aesthetic landing page that
+              allows users to add and view properties. Built with React Native
+              frontend and MySQL database backend.
+            </div>
+            <div class="project-tags">
+              <span>React Native</span>
+              <span>JavaScript</span>
+              <span>Node.js</span>
+              <span>MySQL</span>
+            </div>
+            <a class="view-code" href="#">View Code</a>
+          </div>
+
+          <!-- Level 3: Job Portal -->
+          <div class="project-card" data-level="3" style="display: none">
+            <div class="level-label">Level 3</div>
+            <div class="project-icon">💼</div>
+            <div class="project-title">Job Portal</div>
+            <div class="project-desc">
+              An application that allows users to visualize job posts and create
+              their own job listings. Implemented with React Native and MongoDB
+              for a robust non-relational database solution.
+            </div>
+            <div class="project-tags">
+              <span>React Native</span>
+              <span>JavaScript</span>
+              <span>Node.js</span>
+              <span>MongoDB</span>
+            </div>
+            <a class="view-code" href="#">View Code</a>
+          </div>
+
+          <!-- Level 4: Intelligent Engineering Algorithms -->
+          <div class="project-card" data-level="4" style="display: none">
+            <div class="level-label final-level">Final Level</div>
+            <div class="project-icon">🧠</div>
+            <div class="project-title">Intelligent Engineering Algorithms</div>
+            <div class="project-desc">
+              Developed a search agent that can form various shapes with and
+              without obstacles, following both Moore and Von Neumann
+              Neighborhoods. Implemented A* algorithm, BFS, heuristics, and
+              developed a deep learning model. Used K-means and Q-learning
+              (reinforcement learning), as well as Cellular Automata, Genetic Algorithms, and Probability based searching. The
+              frontend was built with React.js and Flask was used for data
+              processing and visualization.
+            </div>
+            <div class="project-tags">
+              <span>React.js</span>
+              <span>Flask</span>
+              <span>Python</span>
+              <span>Deep Learning</span>
+              <span>K-means</span>
+              <span>Q-learning</span>
+              <span>Cellular Automata</span>
+              <span>Genetic Algorithms</span>
+              <span>Probability based searching</span>
+              <span>A*</span>
+              <span>BFS</span>
+            </div>
+            <a class="view-code" href="#">View Code</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="index.js"></script>
+  </body>
 </html>
