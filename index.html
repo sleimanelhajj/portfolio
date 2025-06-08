@@ -13,20 +13,29 @@
   </head>
   <body>
     <!-- Header/Nav Section -->
+    <!-- Replace your existing nav section -->
     <nav class="nav">
       <div class="nav-container">
-        <a href="#" class="logo">My Portfolio </a>
-        <ul class="nav-links">
+        <a href="#" class="logo">My Portfolio</a>
+
+        <!-- Hamburger Menu Button -->
+        <button class="hamburger" id="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <!-- Navigation Links -->
+        <ul class="nav-links" id="navLinks">
           <li><a href="#home">Home</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#education">Education</a></li>
+          <li><a href="#experience">Experience</a></li>
           <li><a href="#projects">Projects</a></li>
-          <li><a href="#skills">Skills</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
       </div>
     </nav>
-
     <!-- Home Section -->
     <section id="home" class="home">
       <div class="scanlines"></div>
@@ -312,48 +321,95 @@
         </div>
       </div>
     </section>
-            </section>
-        
-        <!-- Simple Contact Form for Debugging -->
-        <section id="contact" class="contact-section">
-          <div class="container">
-            <h2 class="section-title">Contact Me</h2>
-            <form class="contact-form">
-              <div class="form-group">
-                <input
-                  type="text"
-                  name="name"
-                  class="form-control"
-                  placeholder="Your Name"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <input
-                  type="email"
-                  name="email"
-                  class="form-control"
-                  placeholder="Your Email"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <textarea
-                  name="message"
-                  class="form-control"
-                  placeholder="Your Message"
-                  rows="5"
-                  required
-                ></textarea>
-              </div>
-              <button type="submit" class="form-btn">Send Message</button>
-            </form>
+
+    <!-- Simple Contact Form for Debugging -->
+    <section id="contact" class="contact-section">
+      <div class="container">
+        <h2 class="section-title">Contact Me</h2>
+        <form class="contact-form">
+          <div class="form-group">
+            <input
+              type="text"
+              name="name"
+              class="form-control"
+              placeholder="Your Name"
+              required
+            />
           </div>
-        </section>
-        
-        <script src="index.js"></script>
-      </body>
-    </html>
+          <div class="form-group">
+            <input
+              type="email"
+              name="email"
+              class="form-control"
+              placeholder="Your Email"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <textarea
+              name="message"
+              class="form-control"
+              placeholder="Your Message"
+              rows="5"
+              required
+            ></textarea>
+          </div>
+          <button type="submit" class="form-btn">Send Message</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-info">
+            <h3 class="footer-logo">Sleiman El Hajj</h3>
+            <p class="footer-desc">
+              Computer Engineering Student & Full Stack Developer
+            </p>
+          </div>
+
+          <div class="footer-links">
+            <div class="footer-section">
+              <h4>Navigation</h4>
+              <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#projects">Projects</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-section">
+              <h4>Connect</h4>
+              <ul>
+                <li><a href="mailto:sleiman.elhajj@lau.edu">Email</a></li>
+                <li>
+                  <a href="https://github.com/sleimanelhajj" target="_blank"
+                    >GitHub</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://linkedin.com/in/sleiman-el-hajj"
+                    target="_blank"
+                    >LinkedIn</a
+                  >
+                </li>
+                <li><a href="#contact">Contact Form</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2025 Sleiman El Hajj. All rights reserved.</p>
+          <p class="footer-note">Built with passion and code ⚡</p>
+        </div>
+      </div>
+    </footer>
+
     <script src="index.js"></script>
   </body>
 </html>

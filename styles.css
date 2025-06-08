@@ -36,7 +36,13 @@ body {
   align-items: center;
   padding: 0 2rem;
   width: 100%;
+
+    display: flex;
+  justify-content: space-between;
+
+  height: 64px;
 }
+
 
 .logo {
   color: #23272e;
@@ -820,5 +826,249 @@ body {
   .contact-form {
     margin: 0 1rem;
     padding: 1.5rem;
+  }
+}
+
+
+/* FOOTER */
+.footer {
+  background: #23272e;
+  color: #e2e8f0;
+  padding: 3rem 0 1.5rem 0;
+  margin-top: 0;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 3rem;
+  margin-bottom: 2rem;
+}
+
+.footer-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.footer-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #3b82f6;
+  margin-bottom: 0.5rem;
+}
+
+.footer-desc {
+  color: #94a3b8;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.footer-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.footer-section h4 {
+  color: #f1f5f9;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #3b82f6;
+  padding-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.footer-section ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer-section a {
+  color: #94a3b8;
+  text-decoration: none;
+  transition: color 0.2s, padding-left 0.2s;
+  padding: 0.25rem 0;
+}
+
+.footer-section a:hover {
+  color: #3b82f6;
+  padding-left: 0.5rem;
+}
+
+.footer-bottom {
+  border-top: 1px solid #374151;
+  padding-top: 1.5rem;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.footer-note {
+  color: #94a3b8;
+}
+
+/* Responsive Footer */
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .footer-links {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .footer-bottom {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer {
+    padding: 2rem 0 1rem 0;
+  }
+  
+  .footer-links {
+    text-align: center;
+  }
+}
+
+/* Hamburger Menu Styles */
+/* Simplified Hamburger Animation */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  width: 40px;
+  height: 40px;
+  margin-left: auto;
+  order: 2;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background: #23272e;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+  display: block;
+}
+
+.hamburger.active span:first-child {
+  transform: rotate(45deg) translate(4px, 5px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:last-child {
+  transform: rotate(-45deg) translate(5px, -6px);
+}
+
+/* Fix project level buttons for mobile */
+@media (max-width: 768px) {
+  .level-select {
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  
+  .level-btn {
+    padding: 0.5em 1.2em;
+    font-size: 0.95rem;
+    min-width: 120px;
+  }
+  
+  /* Show hamburger menu */
+  .hamburger {
+    display: flex;
+  }
+  
+  /* Hide nav links initially on mobile */
+  .nav-links {
+     position: fixed;
+    top: 64px;
+    right: -100%; /* Slide in from the right instead of left */
+    width: 100%;
+    height: calc(100vh - 64px);
+    background: #fff;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 2rem;
+    transition: right 0.3s ease; /* Change to 'right' transition */
+    box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+  }
+  
+  .nav-links.active {
+    right: 0;
+  }
+  
+  .nav-links li {
+    margin: 1rem 0;
+  }
+  
+  .nav-links a {
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+    width: 100%;
+    text-align: center;
+    display: block;
+  }
+}
+
+@media (max-width: 600px) {
+  .level-select {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  
+  .level-btn {
+    width: 80%;
+    max-width: 200px;
+    padding: 0.7em 1em;
+  }
+  
+  /* Fix home buttons for very small screens */
+  .home-buttons {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  .btn-primary, .btn-secondary {
+    width: 100%;
+    max-width: 250px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .level-btn {
+    font-size: 0.9rem;
+    padding: 0.6em 1em;
+  }
+  
+  .nav-links a {
+    font-size: 1.1rem;
   }
 }
