@@ -146,9 +146,20 @@ function updatePromptInput() {
   if (typedCommand) typedCommand.textContent = userInput;
 }
 
+
 document.addEventListener("keydown", function (e) {
   const promptDiv = document.getElementById("terminalPrompt");
   if (!promptDiv || promptDiv.style.display === "none") return;
+
+  // NEW: Check if user is typing in a form input - if so, don't intercept
+  const activeElement = document.activeElement;
+  if (activeElement && (
+    activeElement.tagName === 'INPUT' || 
+    activeElement.tagName === 'TEXTAREA' || 
+    activeElement.contentEditable === 'true'
+  )) {
+    return; // Let the form input handle the keypress
+  }
 
   // Ignore if modifier keys are pressed
   if (e.ctrlKey || e.metaKey || e.altKey) return;
@@ -220,3 +231,36 @@ document.querySelectorAll('.level-btn').forEach(btn => {
 });
 // Set Level 1 as default
 document.querySelector('.level-btn[data-level="1"]').classList.add('active');
+
+// Form Submission Handling
+const contactForm = document.querySelector(".contact-form");
+if (contactForm) {
+  contactForm.addEventListener("submit", async (e) => {
+    e.preventDefault(); // Prevent default form submission
+
+    const formData = new FormData(contactForm);
+
+    try {
+      const response = await fetch("https://formspree.io/f/xwpvdypy", {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: formData,
+      });
+
+      const result = await response.json();
+      console.log("Formspree Response:", result);
+
+      if (response.ok) {
+        alert(
+          "Thank you for your message! I will get back to you soon."
+        );
+        contactForm.reset();
+      } else {
+        alert("Failed to send message. Check console for details.");
+      }
+    } catch (error) {
+      console.error("Error sending form:", error);
+      alert("An error occurred. Please try again later.");
+    }
+  });
+}
