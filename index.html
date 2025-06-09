@@ -10,11 +10,22 @@
       href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
+    <!-- Update your font imports in the head section -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
+    <!-- Add this right after <body> tag -->
+    <div class="constellation-bg">
+      <canvas id="constellation"></canvas>
+    </div>
     <!-- Header/Nav Section -->
     <!-- Replace your existing nav section -->
-    <nav class="nav">
+    <nav class="nav fade-in">
       <div class="nav-container">
         <a href="#" class="logo">My Portfolio</a>
 
@@ -41,12 +52,14 @@
     <section id="home" class="home">
       <div class="scanlines"></div>
       <div class="home-content">
-        <h1 class="name" data-text="Sleiman El Hajj">Sleiman El Hajj</h1>
-        <p class="subtitle">
+        <h1 class="name typing-animation" data-text="Sleiman El Hajj">
+          Sleiman El Hajj
+        </h1>
+        <p class="subtitle fade-in stagger-2">
           Computer Engineering Student | Full Stack Developer
         </p>
 
-        <div class="home-buttons">
+        <div class="home-buttons fade-in stagger-3">
           <a href="#projects" class="btn-primary">[VIEW PROJECTS]</a>
           <a href="#contact" class="btn-secondary">[CONTACT ME]</a>
         </div>
@@ -54,26 +67,36 @@
         <div class="social-links">
           <a
             href="mailto:sleimanelhajj7@gmail.com"
-            class="social-icon"
-            title="Email"
+            class="social-icon tooltip"
+            data-tooltip="Email"
           >
             <span class="icon">📧</span>
           </a>
           <a
             href="https://github.com/sleimanelhajj"
-            class="social-icon"
-            title="GitHub"
+            class="social-icon tooltip"
+            data-tooltip="GitHub"
           >
             <span class="icon">🐙</span>
           </a>
           <a
             href="https://linkedin.com/in/sleiman-el-hajj-0b32b9289"
-            class="social-icon"
-            title="LinkedIn"
+            class="social-icon tooltip"
+            data-tooltip="LinkedIn"
           >
             <span class="icon">💼</span>
           </a>
         </div>
+      </div>
+
+      <div class="gift-container">
+        <a
+          href="gift.html"
+          class="gift-box tooltip"
+          data-tooltip="Click me for a surprise!"
+        >
+          🎁
+        </a>
       </div>
     </section>
 
@@ -521,6 +544,18 @@
         </div>
       </div>
     </footer>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+      <div class="loader"></div>
+      <div class="loading-text">Loading Portfolio</div>
+      <div class="loading-subtitle">Preparing awesome content...</div>
+    </div>
+
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <script src="index.js"></script>
 
     <script src="index.js"></script>
   </body>

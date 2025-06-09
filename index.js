@@ -294,3 +294,559 @@ if (hamburger && navLinks) {
     }
   });
 }
+
+
+// ...existing code...
+
+// PAGE LOADING ANIMATION
+window.addEventListener('load', () => {
+  // Hide loading screen after 2.5 seconds
+  setTimeout(() => {
+    const loadingScreen = document.getElementById('loadingScreen');
+    if (loadingScreen) {
+      loadingScreen.classList.add('hidden');
+      
+      // Remove loading screen from DOM after animation
+      setTimeout(() => {
+        loadingScreen.remove();
+      }, 500);
+    }
+    
+    // Start entrance animations
+    initEntranceAnimations();
+    createParticles();
+  }, 2500);
+});
+
+// ENTRANCE ANIMATIONS
+function initEntranceAnimations() {
+  const animatedElements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .scale-in');
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  });
+
+  animatedElements.forEach(el => {
+    observer.observe(el);
+  });
+}
+
+// FLOATING PARTICLES
+function createParticles() {
+  const particlesContainer = document.getElementById('particles');
+  if (!particlesContainer) return;
+  
+  const numberOfParticles = 50;
+  
+  for (let i = 0; i < numberOfParticles; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    
+    // Random positioning
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.top = Math.random() * 100 + '%';
+    
+    // Random animation delay
+    particle.style.animationDelay = Math.random() * 6 + 's';
+    
+    // Random size
+    const size = Math.random() * 4 + 2;
+    particle.style.width = size + 'px';
+    particle.style.height = size + 'px';
+    
+    particlesContainer.appendChild(particle);
+  }
+}
+
+// TYPING ANIMATION FOR NAME
+function initTypingAnimation() {
+  const nameElement = document.querySelector('.name');
+  if (!nameElement) return;
+  
+  const text = nameElement.textContent;
+  nameElement.textContent = '';
+  nameElement.classList.add('typing-animation');
+  
+  let i = 0;
+  const typeWriter = () => {
+    if (i < text.length) {
+      nameElement.textContent += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, 100);
+    } else {
+      // Remove typing cursor after animation
+      setTimeout(() => {
+        nameElement.style.borderRight = 'none';
+      }, 1000);
+    }
+  };
+  
+  // Start typing after loading screen disappears
+  setTimeout(typeWriter, 3000);
+}
+
+// Initialize typing animation
+initTypingAnimation();
+
+// SMOOTH SCROLLING WITH OFFSET FOR FIXED NAV
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  });
+});
+
+// ...existing code...
+// CONSTELLATION BACKGROUND
+// index.js
+// index.js
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ★ CONFIGURATION ★
+const STAR_COLOR_DEFAULT   = '#3b82f6';          // default star fill
+const STAR_COLOR_CLICKED   = '#FF4500';          // clicked star fill
+const CONST_LINE_COLOR     = '#3b82f6'; // constellation lines
+const PERM_LINE_COLOR      = '#3b82f6'; // permanent click‐lines
+const MOUSE_LINE_COLOR     = '#3b82f6'; // hover‐to‐mouse lines
+
+// how close two clicked stars must be to form one constellation
+const CLUSTER_MAX_DISTANCE   = 120;
+
+// how close a pointer-click must land to a star to toggle it
+const CLICK_HIT_RADIUS       = 30;
+// ─────────────────────────────────────────────────────────────────────────────
+
+class ConstellationBackground {
+  constructor() {
+    this.canvas = document.getElementById('constellation');
+    this.ctx    = this.canvas.getContext('2d');
+    this.stars  = [];
+    this.mouse  = { x: 0, y: 0 };
+
+    // store clicked stars
+    this.clickedStars         = new Set();
+    // store permanent connections between clicked stars
+    this.permanentConnections = [];
+
+    this.init();
+    this.animate();
+    this.addEventListeners();
+  }
+  
+  init() {
+    this.resize();
+    this.createStars();
+  }
+  
+  resize() {
+    this.canvas.width  = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+  }
+  
+  createStars() {
+    const area     = this.canvas.width * this.canvas.height;
+    const numStars = Math.floor(area / 8000);
+    this.stars = [];
+
+    for (let i = 0; i < numStars; i++) {
+      this.stars.push({
+        x: Math.random() * this.canvas.width,
+        y: Math.random() * this.canvas.height,
+        size: Math.random() * 2 + 1,
+        brightness: Math.random(),
+        speed: Math.random() * 0.5 + 0.1,
+        clicked: false
+      });
+    }
+  }
+  
+  drawStars() {
+    this.stars.forEach(star => {
+      this.ctx.save();
+      this.ctx.globalAlpha = star.brightness;
+      this.ctx.fillStyle  = star.clicked ? STAR_COLOR_CLICKED : STAR_COLOR_DEFAULT;
+      this.ctx.shadowBlur  = star.size * 2;
+      this.ctx.shadowColor = this.ctx.fillStyle;
+
+      this.ctx.beginPath();
+      this.ctx.arc(
+        star.x,
+        star.y,
+        star.clicked ? star.size * 1.5 : star.size,
+        0,
+        Math.PI * 2
+      );
+      this.ctx.fill();
+      this.ctx.restore();
+
+      // twinkle
+      star.brightness += (Math.random() - 0.5) * 0.02;
+      star.brightness = Math.max(0.3, Math.min(1, star.brightness));
+    });
+  }
+
+  drawConstellations() {
+    this.ctx.strokeStyle = CONST_LINE_COLOR;
+    this.ctx.lineWidth   = 1;
+
+    for (let i = 0; i < this.stars.length; i++) {
+      for (let j = i + 1; j < this.stars.length; j++) {
+        const s1 = this.stars[i];
+        const s2 = this.stars[j];
+        const dx = s1.x - s2.x;
+        const dy = s1.y - s2.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < CLUSTER_MAX_DISTANCE) {
+          this.ctx.globalAlpha = (CLUSTER_MAX_DISTANCE - dist) / CLUSTER_MAX_DISTANCE * 0.5;
+          this.ctx.beginPath();
+          this.ctx.moveTo(s1.x, s1.y);
+          this.ctx.lineTo(s2.x, s2.y);
+          this.ctx.stroke();
+        }
+      }
+    }
+    this.ctx.globalAlpha = 1;
+  }
+
+  drawPermanentConnections() {
+    this.ctx.strokeStyle = PERM_LINE_COLOR;
+    this.ctx.lineWidth   = 3;
+    this.ctx.globalAlpha = 1;
+
+    this.permanentConnections.forEach(conn => {
+      this.ctx.beginPath();
+      this.ctx.moveTo(conn.star1.x, conn.star1.y);
+      this.ctx.lineTo(conn.star2.x, conn.star2.y);
+      this.ctx.stroke();
+    });
+  }
+
+  drawMouseConnections() {
+    this.ctx.strokeStyle = MOUSE_LINE_COLOR;
+    this.ctx.lineWidth   = 2;
+
+    this.stars.forEach(star => {
+      const dx   = star.x - this.mouse.x;
+      const dy   = star.y - this.mouse.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 150) {
+        this.ctx.globalAlpha = (150 - dist) / 150 * 0.8;
+        this.ctx.beginPath();
+        this.ctx.moveTo(star.x, star.y);
+        this.ctx.lineTo(this.mouse.x, this.mouse.y);
+        this.ctx.stroke();
+      }
+    });
+    this.ctx.globalAlpha = 1;
+  }
+
+  handleCanvasClick(e) {
+    // find click position
+    const rect   = this.canvas.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const clickY = e.clientY - rect.top;
+
+    // find nearest star
+    let closest = null;
+    let minD    = CLICK_HIT_RADIUS;
+    this.stars.forEach(star => {
+      const dx   = star.x - clickX;
+      const dy   = star.y - clickY;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < minD) {
+        minD    = dist;
+        closest = star;
+      }
+    });
+    if (!closest) return;
+    
+    // toggle it
+    closest.clicked = !closest.clicked;
+
+    if (closest.clicked) {
+      // add to clicked set
+      this.clickedStars.add(closest);
+
+      // connect it only to other clicked stars within CLUSTER_MAX_DISTANCE
+      this.clickedStars.forEach(other => {
+        if (other !== closest) {
+          const dx   = other.x - closest.x;
+          const dy   = other.y - closest.y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < CLUSTER_MAX_DISTANCE) {
+            this.permanentConnections.push({ star1: closest, star2: other });
+          }
+        }
+      });
+    } else {
+      // remove from clicked set
+      this.clickedStars.delete(closest);
+      // drop any permanent connections to/from it
+      this.permanentConnections = this.permanentConnections.filter(
+        c => c.star1 !== closest && c.star2 !== closest
+      );
+    }
+  }
+
+ updateStars() {
+  this.stars.forEach(star => {
+    star.y += star.speed;
+
+    if (star.y > this.canvas.height + 10) {
+      // Teleport back to top
+      star.y = -10;
+      star.x = Math.random() * this.canvas.width;
+
+      // ⚠️ NEW: if it was clicked, un-click it and drop its connections
+      if (star.clicked) {
+        star.clicked = false;
+        this.clickedStars.delete(star);
+
+        // remove any permanentConnections involving this star
+        this.permanentConnections = this.permanentConnections.filter(
+          c => c.star1 !== star && c.star2 !== star
+        );
+
+        // if you were using lastClickedStar logic, clear it too:
+        if (this.lastClickedStar === star) {
+          this.lastClickedStar = null;
+        }
+      }
+    }
+  });
+}
+
+  animate() {
+    // clear to transparent so CSS background shows
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    this.drawStars();
+    this.drawConstellations();
+    this.drawPermanentConnections();
+    this.drawMouseConnections();
+    this.updateStars();
+
+    requestAnimationFrame(() => this.animate());
+  }
+
+  addEventListeners() {
+    window.addEventListener('resize', () => {
+      this.resize();
+      this.createStars();
+    });
+
+    window.addEventListener('mousemove', e => {
+      this.mouse.x = e.clientX;
+      this.mouse.y = e.clientY;
+    });
+
+    // only handle *single* clicks (ignore double-clicks)
+    this.canvas.addEventListener('click', e => {
+      if (e.detail === 1) this.handleCanvasClick(e);
+    });
+
+    this.canvas.style.pointerEvents = 'auto';
+  }
+}
+
+// initialize
+window.addEventListener('load', () => {
+  new ConstellationBackground();
+
+  // your existing loader & page-init code
+  setTimeout(() => {
+    const screen = document.getElementById('loadingScreen');
+    if (screen) {
+      screen.classList.add('hidden');
+      setTimeout(() => screen.remove(), 500);
+    }
+    initEntranceAnimations();
+    initCardAnimations();
+    initNavbarScrollEffect();
+    createParticles();
+    initParallaxEffect();
+    document.querySelector('#home')?.classList.add('visible');
+  }, 2500);
+});
+// ...existing code...
+
+// GIFT FUNCTIONALITY
+function initGiftInteraction() {
+  const giftBox = document.querySelector('.gift-box');
+  
+  if (giftBox) {
+    giftBox.addEventListener('click', function() {
+      // Create confetti effect
+      createConfetti();
+      
+      // Show surprise message
+      showSurpriseMessage();
+      
+      // Temporarily disable the gift
+      this.style.pointerEvents = 'none';
+      this.style.opacity = '0.5';
+      
+      // Re-enable after 3 seconds
+      setTimeout(() => {
+        this.style.pointerEvents = 'auto';
+        this.style.opacity = '1';
+      }, 3000);
+    });
+  }
+}
+
+function createConfetti() {
+  const colors = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6'];
+  const confettiContainer = document.createElement('div');
+  confettiContainer.style.position = 'fixed';
+  confettiContainer.style.top = '0';
+  confettiContainer.style.left = '0';
+  confettiContainer.style.width = '100%';
+  confettiContainer.style.height = '100%';
+  confettiContainer.style.pointerEvents = 'none';
+  confettiContainer.style.zIndex = '9999';
+  
+  document.body.appendChild(confettiContainer);
+  
+  // Create multiple confetti pieces
+  for (let i = 0; i < 50; i++) {
+    const confetti = document.createElement('div');
+    confetti.style.position = 'absolute';
+    confetti.style.width = '10px';
+    confetti.style.height = '10px';
+    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.left = Math.random() * 100 + '%';
+    confetti.style.top = '-10px';
+    confetti.style.borderRadius = '50%';
+    confetti.style.animation = `confettiFall ${2 + Math.random() * 3}s linear forwards`;
+    
+    confettiContainer.appendChild(confetti);
+  }
+  
+  // Remove confetti after animation
+  setTimeout(() => {
+    document.body.removeChild(confettiContainer);
+  }, 5000);
+}
+
+function showSurpriseMessage() {
+  const messages = [
+    "🎉 Thanks for clicking! Hope you enjoy my portfolio!",
+    "✨ Surprise! You found the hidden gift!",
+    "🚀 Keep exploring my projects!",
+    "💫 You're awesome for checking this out!",
+    "🎊 Hope you're having a great day!"
+  ];
+  
+  const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+  
+  // Create message element
+  const messageDiv = document.createElement('div');
+  messageDiv.textContent = randomMessage;
+  messageDiv.style.position = 'fixed';
+  messageDiv.style.top = '50%';
+  messageDiv.style.left = '50%';
+  messageDiv.style.transform = 'translate(-50%, -50%)';
+  messageDiv.style.background = 'rgba(59, 130, 246, 0.95)';
+  messageDiv.style.color = 'white';
+  messageDiv.style.padding = '1rem 2rem';
+  messageDiv.style.borderRadius = '12px';
+  messageDiv.style.fontSize = '1.2rem';
+  messageDiv.style.fontWeight = '600';
+  messageDiv.style.zIndex = '10000';
+  messageDiv.style.animation = 'fadeInScale 0.5s ease';
+  messageDiv.style.textAlign = 'center';
+  messageDiv.style.maxWidth = '90%';
+  messageDiv.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.2)';
+  
+  document.body.appendChild(messageDiv);
+  
+  // Remove message after 3 seconds
+  setTimeout(() => {
+    messageDiv.style.animation = 'fadeOutScale 0.5s ease forwards';
+    setTimeout(() => {
+      document.body.removeChild(messageDiv);
+    }, 500);
+  }, 2500);
+}
+
+// Add CSS animations for confetti and messages
+const additionalStyles = `
+@keyframes confettiFall {
+  to {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes fadeOutScale {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+}
+`;
+
+// Inject additional styles
+const styleSheet = document.createElement('style');
+styleSheet.textContent = additionalStyles;
+document.head.appendChild(styleSheet);
+
+// Initialize gift interaction when page loads
+window.addEventListener('load', () => {
+  // ...existing code...
+  initGiftInteraction();
+});
+
+function initGiftInteraction() {
+  const giftBox = document.querySelector('.gift-box');
+  
+  if (giftBox) {
+    giftBox.addEventListener('click', function(e) {
+      e.preventDefault(); // Prevent immediate navigation
+      
+      // Add a small animation before redirecting
+      this.style.transform = 'scale(1.3) rotate(360deg)';
+      this.style.transition = 'all 0.5s ease';
+      
+      // Redirect after animation
+      setTimeout(() => {
+        window.location.href = 'gift.html';
+      }, 500);
+    });
+  }
+}
+
+// Initialize gift interaction when page loads
+window.addEventListener('load', () => {
+  // ...existing code...
+  initGiftInteraction();
+});

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>A Special Gift 💝</title>
+    <style>
+      /* Reset & Base */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #fff;
+        font-family: "Inter", sans-serif;
+        height: 100vh;
+        overflow: hidden;
+        position: relative;
+      }
+
+      /* Particles */
+      #particles {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+      }
+      .particle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 50%;
+        animation: float 6s ease-in-out infinite;
+      }
+      @keyframes float {
+        0%, 100% {
+          transform: translateY(0) rotate(0);
+          opacity: 0.7;
+        }
+        50% {
+          transform: translateY(-20px) rotate(180deg);
+          opacity: 1;
+        }
+      }
+
+      /* Container */
+      .gift-container {
+        position: relative;
+        z-index: 10;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+      .back-btn {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        color: #fff;
+        padding: 0.6rem 1rem;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+        z-index: 20;
+      }
+      .back-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Countdown */
+      .countdown-section {
+        opacity: 1;
+        transition: opacity 1s ease;
+      }
+      .countdown-section.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .countdown-title {
+        font-size: 3rem;
+        margin-bottom: 2rem;
+        background: linear-gradient(45deg, #ffd700, #ffb347);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: glow 2s ease-in-out infinite alternate;
+      }
+      .countdown-display {
+        font-size: 4rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+      }
+      .countdown-label {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        margin-bottom: 2rem;
+      }
+      .heart {
+        font-size: 2rem;
+        color: #ff6b6b;
+        animation: heartbeat 1.5s ease-in-out infinite;
+      }
+
+      /* Flashback timeline */
+      .timeline-section {
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 20;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
+      .timeline-section.visible {
+        opacity: 1;
+      }
+      .timeline-date {
+        font-size: 3rem;
+        font-weight: bold;
+        color: #fff;
+        text-shadow: 0 0 10px rgba(0,0,0,0.5);
+      }
+
+      /* Story */
+      .story-section {
+        opacity: 0;
+        position: absolute;
+        width: 100%;
+        transition: opacity 1s ease;
+      }
+      .story-section.visible {
+        opacity: 1;
+      }
+      .story-text {
+        font-size: 2.5rem;
+        line-height: 1.4;
+        margin-bottom: 2rem;
+        opacity: 0;
+      }
+      .story-text.typing {
+        opacity: 1;
+        border-right: 3px solid #ffd700;
+        animation: blink-caret 0.75s step-end infinite;
+      }
+      .story-subtext {
+        font-size: 1.5rem;
+        opacity: 0;
+        margin-top: 2rem;
+        font-style: italic;
+      }
+
+      /* Cake */
+      #birthdayCake {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        opacity: 0;
+        animation: cakeRise 1.5s ease-out forwards;
+        cursor: pointer;
+      }
+      #birthdayCake::before {
+        content: '';
+        display: block;
+        width: 180px;
+        height: 10px;
+        background: rgba(0,0,0,0.1);
+        border-radius: 50%;
+        margin: 0 auto -5px;
+        filter: blur(4px);
+        z-index: -1;
+      }
+      .cake-top, .cake-middle, .cake-bottom {
+        margin: 0 auto;
+        border-radius: 0.5rem;
+      }
+      .candles .candle {
+        width: 6px;
+        height: 35px;
+        margin: 0 4px;
+      }
+      .flame {
+        animation: flameFlicker 0.8s ease-in-out infinite alternate;
+        filter: drop-shadow(0 0 6px #ff9a00);
+      }
+      @keyframes cakeRise {
+        from { transform: translateX(-50%) translateY(100px); opacity: 0; }
+        to { transform: translateX(-50%) translateY(0); opacity: 1; }
+      }
+      @keyframes flameFlicker {
+        from { transform: scale(1) rotate(-1deg); }
+        to   { transform: scale(1.1) rotate(1deg); }
+      }
+
+      /* Animations & responsive */
+      @keyframes glow {
+        from { text-shadow: 0 0 20px rgba(255,215,0,0.5) }
+        to   { text-shadow: 0 0 30px rgba(255,215,0,0.8), 0 0 40px rgba(255,215,0,0.6) }
+      }
+      @keyframes blink-caret {
+        0%,100% { border-color: transparent }
+        50% { border-color: #ffd700 }
+      }
+      @keyframes fadeInUp {
+        from { opacity:0; transform:translateY(30px) }
+        to   { opacity:1; transform:translateY(0) }
+      }
+      @keyframes heartbeat {
+        0%,100% { transform:scale(1) }
+        50% { transform:scale(1.2) }
+      }
+
+      @media (max-width: 768px) {
+        .countdown-title { font-size: 2rem }
+        .countdown-display { font-size: 2.5rem }
+        .story-text { font-size: 1.8rem; padding:0 1rem; }
+        .story-subtext { font-size: 1.2rem; padding:0 1rem; }
+        #birthdayCake { transform: translateX(-50%) scale(0.8) }
+      }
+      @media (max-width: 480px) {
+        .countdown-title { font-size: 1.5rem }
+        .countdown-display { font-size: 2rem }
+        .story-text { font-size: 1.4rem }
+        .story-subtext { font-size: 1rem }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Particles -->
+    <div id="particles"></div>
+
+    <!-- Back -->
+    <a href="index.html" class="back-btn">← Back to Portfolio</a>
+
+    <div class="gift-container">
+      <!-- Countdown -->
+      <div class="countdown-section" id="countdownSection">
+        <h1 class="countdown-title">🎂 Counting Down to a Special Day 🎂</h1>
+        <div class="countdown-display" id="countdownDisplay">Loading...</div>
+        <p class="countdown-label">Until July 22nd arrives again...</p>
+        <div class="heart">💝</div>
+      </div>
+
+      <!-- Timeline Flashback -->
+      <div class="timeline-section" id="timelineSection">
+        <div class="timeline-date" id="timelineDate">July 22, 2025</div>
+      </div>
+
+      <!-- Story -->
+      <div class="story-section" id="storySection">
+        <div class="story-text" id="storyText"></div>
+        <div class="story-subtext" id="storySubtext"></div>
+      </div>
+    </div>
+
+    <!-- Cake will be injected by JS -->
+    <script type="module" src="gift.js"></script>
+  </body>
+</html>
